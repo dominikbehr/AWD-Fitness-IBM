@@ -1,0 +1,80 @@
+###################################################################
+#Load packages and source support functions
+library(lattice)
+###################################################################
+#Load packages and source support functions
+library(lattice)
+library(R2jags)
+#library(jagsUI)
+library(ggplot2)
+library(standardize)
+library(standardize)
+library(psych)
+library(lubridate)
+library(chron)
+library(lme4)
+library(openxlsx)
+library(fitdistrplus)
+#Load packages and source support functions
+library(lattice)
+library(ggplot2)
+library(standardize)
+library(psych)
+library(lubridate)
+library(chron)
+library(lme4)
+library(openxlsx)
+library(fitdistrplus)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+nDraws = 1
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393)
+histogram(rgamma(n = 1000, shape = 1.302326 , rate = 0.02272393))
+summary(rgamma(n = 1000, shape = 1.302326 , rate = 0.02272393))
+# draw dispersal duration from gamma distribution:
+f.drawDispDuration <- function(nDraws = 1, unit = "months"){
+# unit = c("days", "months", "years")
+dispDuration <- rgamma(n = nDraws, shape = 1.302326 , rate = 0.02272393) # we obtained shape and rate parameters from fitting a gamma distribution to observed dispersal duration times (see below code that is commented out)
+if(unit=="days") return(dispDuration)
+if(unit=="months") return(dispDuration/(365/12))
+if(unit=="years") return(dispDuration/365)
+}
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+f.drawDispDuration(nDraws = 1, unit = "months")
+print("hello world")
+remove(f.test)
+###################################################################
+# load functions
+source(file = "02 - functions.R")
+###################################################################
+# load functions
+source(file = "02 - functions.R")
+f.test()
+remove(f.test)
+f.test()
+###################################################################
+# load functions
+source(file = "02 - functions.R")
+f.test()
