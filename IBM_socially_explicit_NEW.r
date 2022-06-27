@@ -38,7 +38,6 @@ df.packsStart <- expand.grid(idPack = NA, # pack identity
                              agefFounders = founders.ageMonths, # age of pack founding females (we assume they're all sisters of the same litter)
                              ageMFounders = founders.ageMonths) # age of pack founding males (we assume they're all brothers of the same litter)
 
-
 # assign unique pack identity number:
 df.packsStart$idPack <- 1:nrow(df.packsStart)
 
@@ -84,8 +83,6 @@ for(run in 1:nRuns){
   dateEnd <- ceiling_date(as.Date(-1, as.Date(paste0(yearStart,"-",monthStart,"-01"))))
   dateStart <- floor_date(as.Date(-3*28, dateEnd), unit = "month")
   dateNow <- dateStart
-  ##Error: object 'df.monthlyRain' not found  // couldn't find it in 01-start or 02-functions
-  
   df.r <- subset(df.monthlyRain, date>=as.Date("1989-07-01"))
   while(dateNow<=dateEnd){
     row <- data.frame(id = as.integer(NA),
