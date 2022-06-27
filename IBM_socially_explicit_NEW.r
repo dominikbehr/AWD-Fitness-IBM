@@ -1,7 +1,7 @@
 ###################################################################
 
 # Socially explicit IBM
-
+#Hello GIthub   /yunus
 # we start with newly formed packs based on all possible compositions of number of founding females and males
 # we start in March (when mating)
 # we assume a single litter is born per pack each year in June (no failed pregnancies)
@@ -80,40 +80,40 @@ for(run in 1:nRuns){
   print(paste("----- RUN =",runNow,"-----"))
   
   # we initialize df.rain and df.temp with the 3 months prior to monthStart and yearStart
-  dateEnd <- ceiling_date(as.Date(-1, as.Date(paste0(yearStart,"-",monthStart,"-01"))))
-  dateStart <- floor_date(as.Date(-3*28, dateEnd), unit = "month")
-  dateNow <- dateStart
-  df.r <- subset(df.monthlyRain, date>=as.Date("1989-07-01"))
-  while(dateNow<=dateEnd){
-    row <- data.frame(id = as.integer(NA),
-                      run = runNow,
-                      year = year(dateNow),
-                      month = month(dateNow),
-                      date = as.Date(paste0(year(dateNow),"-",month(dateNow),"-15")),
-                      rain = rnorm(n = 1, mean = mean(df.r$rain.mean[which(df.r$month==month(dateNow))]), sd = sd(df.r$rain.mean[which(df.r$month==month(dateNow))]))
-    )
-    df.rain <- f.pushRow(df = df.rain, row = row)
-    remove(row)
-    dateNow <- ceiling_date(dateNow, unit = "month")
-  }
-  
-  # we initialize df.rain and df.temp with the 3 months prior to monthStart and yearStart
-  dateNow <- dateStart
-  df.t <- subset(df.temp, date>=as.Date("1989-07-01") & date<=as.Date("2020-06-30"))
-  df.t$month <- month(df.t$date)
-  while(dateNow<=dateEnd){
-    row <- data.frame(id = as.integer(NA),
-                      run = runNow,
-                      year = year(dateNow),
-                      month = month(dateNow),
-                      date = as.Date(paste0(year(dateNow),"-",month(dateNow),"-15")),
-                      temp = rnorm(n = 1, mean = mean(df.t$Tmax[which(df.t$month==month(dateNow))], na.rm=TRUE), sd = sd(df.t$Tmax[which(df.t$month==month(dateNow))], na.rm=TRUE))
-    )
-    df.tempMax <- f.pushRow(df = df.tempMax, row = row)
-    remove(row)
-    dateNow <- ceiling_date(dateNow, unit = "month")
-  }
-  remove(dateNow,dateEnd,dateStart)
+  # dateEnd <- ceiling_date(as.Date(-1, as.Date(paste0(yearStart,"-",monthStart,"-01"))))
+  # dateStart <- floor_date(as.Date(-3*28, dateEnd), unit = "month")
+  # dateNow <- dateStart
+  # df.r <- subset(df.monthlyRain, date>=as.Date("1989-07-01"))
+  # while(dateNow<=dateEnd){
+  #   row <- data.frame(id = as.integer(NA),
+  #                     run = runNow,
+  #                     year = year(dateNow),
+  #                     month = month(dateNow),
+  #                     date = as.Date(paste0(year(dateNow),"-",month(dateNow),"-15")),
+  #                     rain = rnorm(n = 1, mean = mean(df.r$rain.mean[which(df.r$month==month(dateNow))]), sd = sd(df.r$rain.mean[which(df.r$month==month(dateNow))]))
+  #   )
+  #   df.rain <- f.pushRow(df = df.rain, row = row)
+  #   remove(row)
+  #   dateNow <- ceiling_date(dateNow, unit = "month")
+  # } 
+  # 
+  # # we initialize df.rain and df.temp with the 3 months prior to monthStart and yearStart
+  # dateNow <- dateStart
+  # df.t <- subset(df.temp, date>=as.Date("1989-07-01") & date<=as.Date("2020-06-30"))
+  # df.t$month <- month(df.t$date)
+  # while(dateNow<=dateEnd){
+  #   row <- data.frame(id = as.integer(NA),
+  #                     run = runNow,
+  #                     year = year(dateNow),
+  #                     month = month(dateNow),
+  #                     date = as.Date(paste0(year(dateNow),"-",month(dateNow),"-15")),
+  #                     temp = rnorm(n = 1, mean = mean(df.t$Tmax[which(df.t$month==month(dateNow))], na.rm=TRUE), sd = sd(df.t$Tmax[which(df.t$month==month(dateNow))], na.rm=TRUE))
+  #   )
+  #   df.tempMax <- f.pushRow(df = df.tempMax, row = row)
+  #   remove(row)
+  #   dateNow <- ceiling_date(dateNow, unit = "month")
+  # }
+  # remove(dateNow,dateEnd,dateStart)
   
   
   keep.running <- TRUE
@@ -124,15 +124,15 @@ for(run in 1:nRuns){
     # get current year and month:
     monthNow <- month
     yearNow <- year
-    
+
     #if(yearNow==8) break()
-    
+
     print(paste("year =",yearNow,"| month =",monthNow))
-    
+
     # print number of live individuals that were born in one of the initial packs:
     nInd <- ifelse(test = is.null(df.individuals), yes = 0, no = nrow(subset(df.individuals, alive==TRUE & year==yearNow & month==monthNow & run==runNow & idLitter%in%df.litters$id[which(df.litters$idGroup%in%unique(df.groups$idGroup[which(df.groups$run==runNow & df.groups$initialPack==TRUE)]))])))
     print(paste("     n individuals alive =",nInd))
-    
+
     # get month and year of next time step:
     month.next <- month+1
     year.next <- year
@@ -140,34 +140,37 @@ for(run in 1:nRuns){
       month.next <- 1
       year.next <- year+1
     }
+
+    # # we draw monthly rainfall from historic data and add it to df.rain
+    # row <- data.frame(id = as.integer(NA),
+    #                   run = runNow,
+    #                   year = yearNow,
+    #                   month = monthNow,
+    #                   date = as.Date(paste0(yearNow,"-",monthNow,"-15")),
+    #                   rain = rnorm(n = 1, mean = mean(df.r$rain.mean[which(df.r$month==monthNow)]), sd = sd(df.r$rain.mean[which(df.r$month==monthNow)]))
+    # )
+    # df.rain <- f.pushRow(df = df.rain, row = row)
+    # 
+    # # we draw mean max monthly temperature from historic data and add it to df.tempMax
+    # row <- data.frame(id = as.integer(NA),
+    #                   run = runNow,
+    #                   year = yearNow,
+    #                   month = monthNow,
+    #                   date = as.Date(paste0(yearNow,"-",monthNow,"-15")),
+    #                   temp = rnorm(n = 1, mean = mean(df.t$Tmax[which(df.t$month==monthNow)], na.rm=TRUE), sd = sd(df.t$Tmax[which(df.t$month==monthNow)], na.rm=TRUE))
+    # )
+    # df.tempMax <- f.pushRow(df = df.tempMax, row = row)
+    # remove(row)
+    # 
+    # # define time interval of prior 3 months:
+    # int <- interval(start = floor_date(as.Date(-3*28, as.Date(paste0(yearNow,"-",monthNow,"-01"))), unit = "month"), end = ceiling_date(as.Date(-1, as.Date(paste0(yearNow,"-",monthNow,"-01")))))
+    # 
+    # # get rain and temp of prior 3 months:
+    # rainNow <- sum(df.rain$rain[which(df.rain$date%within%int & df.rain$run==runNow)])
+    # tempNow <- mean(df.tempMax$temp[which(df.tempMax$date%within%int & df.tempMax$run==runNow)], na.rm=TRUE)
     
-    # we draw monthly rainfall from historic data and add it to df.rain
-    row <- data.frame(id = as.integer(NA),
-                      run = runNow,
-                      year = yearNow,
-                      month = monthNow,
-                      date = as.Date(paste0(yearNow,"-",monthNow,"-15")),
-                      rain = rnorm(n = 1, mean = mean(df.r$rain.mean[which(df.r$month==monthNow)]), sd = sd(df.r$rain.mean[which(df.r$month==monthNow)]))
-    )
-    df.rain <- f.pushRow(df = df.rain, row = row)
-    
-    # we draw mean max monthly temperature from historic data and add it to df.tempMax
-    row <- data.frame(id = as.integer(NA),
-                      run = runNow,
-                      year = yearNow,
-                      month = monthNow,
-                      date = as.Date(paste0(yearNow,"-",monthNow,"-15")),
-                      temp = rnorm(n = 1, mean = mean(df.t$Tmax[which(df.t$month==monthNow)], na.rm=TRUE), sd = sd(df.t$Tmax[which(df.t$month==monthNow)], na.rm=TRUE))
-    )
-    df.tempMax <- f.pushRow(df = df.tempMax, row = row)
-    remove(row)
-    
-    # define time interval of prior 3 months:
-    int <- interval(start = floor_date(as.Date(-3*28, as.Date(paste0(yearNow,"-",monthNow,"-01"))), unit = "month"), end = ceiling_date(as.Date(-1, as.Date(paste0(yearNow,"-",monthNow,"-01")))))
-    
-    # get rain and temp of prior 3 months:
-    rainNow <- sum(df.rain$rain[which(df.rain$date%within%int & df.rain$run==runNow)])
-    tempNow <- mean(df.tempMax$temp[which(df.tempMax$date%within%int & df.tempMax$run==runNow)], na.rm=TRUE)
+    rainNow<-0
+    tempNow<-0
     
     # if this is the first time step, we have to initialize all packs and founding individuals:
     if(yearNow==yearStart & monthNow==monthStart){
@@ -209,6 +212,7 @@ for(run in 1:nRuns){
                                       groupID = groupID, packFounder = TRUE)
         
         # we add the same individuals again with the next month:
+        #why??  /yunus
         row <- subset(df.individuals, idGroup==groupID & year==yearNow & month==monthNow & run==runNow)
         row$year <- year.next
         row$month <- month.next
@@ -223,6 +227,7 @@ for(run in 1:nRuns){
     }else{ 
       
       # we select all groups that are currently existing:
+      #df.groupsAlive$id will always be double because of month.next in df.groups /yunus
       df.groupsAlive <- subset(df.groups, run==runNow & year==yearNow & month==monthNow)
       
       # if there are no groups left, we start the next run:
@@ -266,7 +271,18 @@ for(run in 1:nRuns){
             # A.1) individuals survive or die
             # resident mortality covariate values:
             df.values.cov <- data.frame(adults = df$nAdults[j], pups =  df$nPups[j], dominant = as.integer(df$dominant[j]), temp = df.groupsAlive$temp[i], rain = df.groupsAlive$rain[i], denning = as.integer(df.groupsAlive$denning[i]), habitat = NA)
-            df$survProb[j] <- min(c(f.survProbInterval(state = "resident", ageMonths1 = df$ageMonth[j], ageMonths2 = df$ageMonth[j]+1, Sex = df$sex[j], df.coeffs = df.coeffs, df.scale.cov = df.scale.cov, df.values.cov = df.values.cov, ageMax = ageMax), 1))
+            # #######################   /yunus
+            # print("AHAAAA HERE IT IS")
+            # print(df)
+            # print(df$ageMonth[j])
+            # print( df$sex[j])
+            # print(df.coeffs)
+            # print(df.values.cov)
+            # #f.survProbInterval(state = "resident", ageMonths1 = 30, ageMonths2 = 30+1, Sex = 'M', df.coeffs = df.coeffs, df.scale.cov = 0, df.values.cov = df.values.cov, ageMax = ageMax)
+            # print("WORKED")
+            # #######################   /yunus
+            #df$survProb[j] <- min(c(f.survProbInterval(state = "resident", ageMonths1 = df$ageMonth[j], ageMonths2 = df$ageMonth[j]+1, Sex = df$sex[j], df.coeffs = df.coeffs, df.scale.cov = df.scale.cov, df.values.cov = df.values.cov, ageMax = ageMax), 1))
+            df$survProb[j]<-0.9    # /yunus
             df$alive[j] <- as.logical(rbinom(n = 1, size = 1, prob = df$survProb[j]))
             remove(df.values.cov)
             
@@ -280,14 +296,17 @@ for(run in 1:nRuns){
               }else if(df$sex[j]=="M"){
                 df.values.cov <- data.frame(adults = df$nAdults[j], pups =  df$nPups[j], allIndOppSexRelated = 1, JulianDaysCos = f.julianDays(year = yearNow, month = monthNow, fun = "cos"), SSsiblingsTot = max(c(0,nrow(subset(df, inNatalPack==TRUE & df$sex=="M" & ageMonth>=12))-1)))
               }
+              #shouldn't emigrating dogs be dispersing? there will be dogs not born in initial pack who emigrate<-TRUE but are not dispersing /yunus
+              #not sure about the dispersing status of the other ones
               df$emProb[j] <- min(c(1, f.pred.emigration(ageMonths1 = df$ageMonth[j], ageMonths2 = df$ageMonth[j]+1, Sex = df$sex[j], df.coeffs = df.coeffs, df.scale.cov = df.scale.cov, df.values.cov = df.values.cov)))
               df$emigrated[j] <- as.logical(rbinom(n = 1, size = 1, prob = df$emProb[j]))
               remove(df.values.cov)
-              
+              #df[rows]<-dispersing     rows <- which(df$emigrated==TRUE & df$alive==TRUE & df$sex==Sex & df$idLitter%in%idLitters.initialPack)
               
             }
             
             # B) if individual is dispersing:
+            #whats dispersing vs emigrated??  is it that a dog in an other pack has emigrated but is no longer dispersing? is this useful info  /yunus
           }else if(df$movement.state[j]=="dispersing"){
             
             # B.1) individuals survive or die
@@ -302,6 +321,8 @@ for(run in 1:nRuns){
               df$settled[j] <- TRUE
               
               # if max dispersal duration is not yet reached, we increment current dispersal duration by one month and individual continues dispersing:
+              
+              ## won't they all have to disperse until maximum dispersal duration is reached? shouldn't there be an other parameter deciding the settlement or is gamma dist. enough? /yunus
             }else if(df$alive[j]==TRUE & df$disp.durationMonths.cum[j]<df$disp.durationMonths.max[j]){
               df$disp.durationMonths.cum[j] <- df$disp.durationMonths.cum[j]+1
               df$settled[j] <- FALSE
@@ -312,7 +333,7 @@ for(run in 1:nRuns){
         }
         
         
-        
+      
         
         ########
         # for resident groups: 
@@ -358,6 +379,7 @@ for(run in 1:nRuns){
           # if it is mating season (i.e. March), dominant female gets pregnant:
           # check if dominant female and dominant male are alive:
           if(monthNow==3 & TRUE%in%df$dominant[which(df$sex=="F" & df$alive==TRUE)] & TRUE%in%df$dominant[which(df$sex=="M" & df$alive==TRUE)]){
+            #is it correct to assume no chance of not pregnancy if alive? /yunus
             df$reproductive.stage[which(df$sex=="F" & df$dominant==TRUE)] <- "pregnant"
           }
           
@@ -370,6 +392,8 @@ for(run in 1:nRuns){
               df$reproductive.stage[which(df$sex=="F" & df$dominant==TRUE)] <- "lactating"
               
               # draw litter size:
+              #is number of adults the correct parameter here? does i matter how mnay adult nondominant females|males are in the group?  /yunus
+              # no XY in f.drawLitterSize /yunus
               litterSize <- f.drawLitterSize(nDraws = 1, adults = df.groupsAlive$nAdults[i], femaleAge.yrs = df$ageMonth[which(df$sex=="F" & df$dominant==TRUE & df$alive==TRUE)]/12)
               
               # draw litter sex ratio:
@@ -379,12 +403,14 @@ for(run in 1:nRuns){
               idMother <- df.individuals$idDog[which(df.individuals$idGroup==df.groupsAlive$idGroup[i] & df.individuals$sex=="F" & df.individuals$dominant==TRUE & df.individuals$year==yearNow & df.individuals$month==3 & df.individuals$alive==TRUE & df.individuals$reproductive.stage=="pregnant")]
               idFather <- df.individuals$idDog[which(df.individuals$idGroup==df.groupsAlive$idGroup[i] & df.individuals$sex=="M" & df.individuals$dominant==TRUE & df.individuals$year==yearNow & df.individuals$month==3 & df.individuals$alive==TRUE)]
               # check if dominant male was dominant in March but died during that month:
+              # couldn't the father also die in April and May?? /yunus
               if(length(idFather)==0) idFather <- df.individuals$idDog[which(df.individuals$idGroup==df.groupsAlive$idGroup[i] & df.individuals$sex=="M" & df.individuals$dominant==TRUE & df.individuals$year==yearNow & df.individuals$month==3 & df.individuals$alive==FALSE)]
               
               # subset(df.groups, idGroup==df.groupsAlive$idGroup[i])
               # View(subset(df.individuals, idGroup==df.groupsAlive$idGroup[i]))
               
               # add litter to df.litters:
+              #shoudln't we also add the litters to df.group nPups?  /yunus
               row.litter <- data.frame(id = ifelse(test = is.null(df.litters), yes = 1, no = max(df.litters$id)+1),
                                        idGroup = df.groupsAlive$idGroup[i],
                                        litterSize = litterSize,
@@ -395,9 +421,10 @@ for(run in 1:nRuns){
                                        idMother = idMother,
                                        idFather = idFather
               )
+              
               df.litters <- f.pushRow(df = df.litters, row = row.litter)
               remove(row.litter)
-              
+              #same pups will have 2 different litters$id's (+-1) in df.litter and df.individuals while having groupID = df.groupsAlive$idGroup[i] /yunus
               # add pups to df.individuals:
               malePups <- litterSexRatio*litterSize
               femalePups <- litterSize-malePups
@@ -407,7 +434,7 @@ for(run in 1:nRuns){
                                             groupID = df.groupsAlive$idGroup[i], packFounder = FALSE,
                                             idMother = idMother, 
                                             idFather = idFather,
-                                            idLitter = ifelse(test = is.null(df.litters), yes = 1, no = max(df.litters$id)+1)
+                                            idLitter = ifelse(test = is.null(df.litters), yes = 1, no = max(df.litters$id)+1)  #shouldn't it be max(df.litters$id) /yunus
               )
               
             }
@@ -420,6 +447,8 @@ for(run in 1:nRuns){
           }
           
         }
+      
+        ## still looping over nrow(df.GroupsAlive)
         
         # if at least one individual emigrated, we have to draw size of dispersing coalition, dispersal duration, and add a new group (i.e. a dispersing coalition):
         df2 <- subset(df, emigrated==TRUE & alive==TRUE)
@@ -437,6 +466,8 @@ for(run in 1:nRuns){
               df2.sex.p <- subset(df, sex==Sex & alive==TRUE & !is.na(emProb))
               
               # draw size of the dispersing coalition --> truncate upper limit of draw by the number of potential dispersers
+              #why this condition? df$emigrated[j] <- as.logical(rbinom(n = 1, size = 1, prob = df$emProb[j])) /yunus
+              #could they all disperse from a group ? /yunus
               if(nrow(df2.sex.p)>nEmi){
                 coalSize <- nrow(df2.sex.p)+1
                 while(coalSize>nrow(df2.sex.p) | coalSize<1){
@@ -444,7 +475,9 @@ for(run in 1:nRuns){
                 }
                 
                 # if more individuals should be dispersing simultaneously, we select dispersers based on highest emProb
+                # Why don't we do it in the begining?  /yunus
                 if(coalSize>nEmi){
+                  #df2 <- subset(df, emigrated==TRUE & alive==TRUE)  and  df2.sex.p <- subset(df, sex==Sex & alive==TRUE & !is.na(emProb))
                   df2.fp2 <- subset(df2.sex.p, emigrated==FALSE)
                   df2.fp2 <- df2.fp2[with(df2.fp2, order(emProb, decreasing = TRUE)), ]
                   df2.fp2 <- df2.fp2[c(1:(coalSize-nEmi)),]
@@ -457,6 +490,9 @@ for(run in 1:nRuns){
               }
               
               # we only follow the dispersal fate of individuals that were born in one of the initial packs:
+              
+              ##why is that so?? wouldn't dispersal of individuals of non-initial packs also contribute to fitness? especially direct vs indirect fitness (for example if indirect fitness had an 
+              # effect on the survival of the litter in the newly found pack of dispersers)/yunus
               idLitters.initialPack <- df.litters$id[which(df.litters$idGroup%in%unique(df.groups$idGroup[which(df.groups$run==runNow & df.groups$initialPack==TRUE)]))]
               
               # check if there are emigrating dogs that were born in one of the initial packs:
@@ -464,10 +500,11 @@ for(run in 1:nRuns){
               
               if(length(rows)>0){
                 
-                # generate a new dispersing coalition:
+                # generate a new dispersing coalition :
                 idGroup.disp <- max(df.groups$idGroup)+1
                 
                 # we add a new group to df.groups:
+                #why month.next /yunus
                 row <- data.frame(id = ifelse(test = is.null(df.groups), yes = 1, no = nrow(df.groups)+1), #unique row ID
                                   idGroup = idGroup.disp, #unique group ID
                                   run = runNow,
@@ -487,6 +524,7 @@ for(run in 1:nRuns){
                 remove(row)
                 
                 # we update state variables and auxiliary variables: 
+                # what is nAdults? Adults in the group of the individual? If so this needs to be updated /yunus
                 rows <- which(df$emigrated==TRUE & df$alive==TRUE & df$sex==Sex & df$idLitter%in%idLitters.initialPack)
                 df$idGroup[rows] <- idGroup.disp
                 df$nPups[rows] <- 0
@@ -495,6 +533,7 @@ for(run in 1:nRuns){
                 df$disp.durationMonths.cum <- 1
                 df$inNatalPack[rows] <- FALSE 
                 
+                #shouldn't we also update df.individuals and df.groups by subtracting the dispersers? /yunus
                 # draw dispersal duration (in months):
                 df$disp.durationMonths.max[rows] <- f.drawDispDuration(nDraws = 1, unit = "months")
                 
@@ -505,6 +544,8 @@ for(run in 1:nRuns){
           }
         }
         remove(df2)
+        ## still looping over nrow(df.GroupsAlive)
+        #df defined above as df <- subset(df.individuals, idGroup==df.groupsAlive$idGroup[i] & month==monthNow & year==yearNow & alive==TRUE & emigrated==FALSE)
         
         # set id.dom.newGroup to zero for now
         id.dom.newGroup <- 0
@@ -583,11 +624,13 @@ for(run in 1:nRuns){
           # we skip the rest and move on the the next group
           remove(row.group, df, rows)
           next(i)
-          
+          #for i in groupsAlive
           
         }
         
-        
+        ## still looping over nrow(df.GroupsAlive)
+      
+      
         # we  update variables associated with this group
         row.group$year <- year.next
         row.group$month <- month.next
@@ -610,6 +653,7 @@ for(run in 1:nRuns){
         #row.group$temp <- 
         
         # we update state variables in df.individuals for the current time step:
+        #df.individuals$nAdults /yunus
         rows <- which(df.individuals$id%in%df$id)
         df.individuals$alive[rows] <- df$alive 
         df.individuals$survProb[rows] <- df$survProb
@@ -637,6 +681,7 @@ for(run in 1:nRuns){
           
           # if there are adults left, the group is still existing and moves on to the next time step:
         }else if(row.group$nAdults>0){
+          #why di we update id's? /yunus
           row.group$id <- max(df.groups$id)+1 # assign unique ids
           df.groups <- f.pushRow(df = df.groups, row = row.group)
         }
@@ -695,13 +740,13 @@ for(run in 1:nRuns){
     if(!is.null(df.litters)) rownames(df.litters) <- NULL
     
     remove(tempNow, rainNow)
-    
+    print(paste("number of individuals: ", nrow(df.individuals)))
   }
   
   df.rain$id <- c(1:nrow(df.rain))
   df.tempMax$id <- c(1:nrow(df.tempMax))
   
-  if(TRUE%in%duplicated(df.litters$id) ) stop("non-unique ids in df.individuals") 
+  if(TRUE%in%duplicated(df.litters$id) ) stop("non-unique ids in df.individuals") #df.litters? /yunus
   if(TRUE%in%duplicated(df.individuals$id) ) stop("non-unique ids in df.individuals") 
   if(TRUE%in%duplicated(df.groups$id) ) stop("non-unique ids in df.groups") 
   
@@ -734,4 +779,7 @@ for(run in 1:nRuns){
 # end_time <- Sys.time()
 # end_time - start_time #--> 1 run with 64 initial packs lasts 3hours
 
-
+#general notes:
+#some parameter to acount for the inbreeding?
+#some parameter to affect the dispersal duration|length
+#
